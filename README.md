@@ -1,10 +1,10 @@
-# ScriptCs.Http
+# ScriptCs.Http [![NuGet](http://img.shields.io/nuget/v/ScriptCs.Http.svg?style=flat)](https://www.nuget.org/packages/ScriptCs.Http/)
 
 This is a ScriptCs library that allows you to make REST style Http requests whilst also providing the ability to use strongly typed objects.
 
 ## Usage
 
-`scriptcs -install ScriptCs.Http` [![NuGet](http://img.shields.io/nuget/v/ScriptCs.Http.svg?style=flat)](https://www.nuget.org/packages/ScriptCs.Http/)
+`scriptcs -install ScriptCs.Http` 
 
 ```
 public class Person
