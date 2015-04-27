@@ -4,9 +4,12 @@
     <id>ScriptCs.Http</id>
     <version>0.1.0</version>
     <authors>Jonathan Channon</authors>
-    <owners>Jonathan Channon</owners>
+    <owners>VQComms</owners>
+    <licenseUrl>https://github.com/VQComms/ScriptCs.Http/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/VQComms/ScriptCs.Http</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A Http Script Library</description>
+    <description>A Http ScriptCs Library</description>
+    <summary>A Http ScriptCs Library</summary>
     <dependencies>
       <dependency id="RestSharp" version="105.0.1" />
     </dependencies>
