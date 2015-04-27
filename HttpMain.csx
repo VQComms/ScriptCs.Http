@@ -1,6 +1,13 @@
 using RestSharp;
 using System.Collections.Generic;
 
+public IRestResponse Get(string url, IDictionary<string, string> headers = null)
+{
+    var result = CreateRequest(url, Method.GET, headers);
+    var response = result.Item1.Execute(result.Item2);
+    return response;
+}
+
 public T Get<T>(string url, IDictionary<string, string> headers = null) where T: new()
 {
     var result = CreateRequest(url, Method.GET, headers);
