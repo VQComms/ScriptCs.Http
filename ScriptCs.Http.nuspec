@@ -10,6 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A Http ScriptCs Library</description>
     <summary>A Http ScriptCs Library</summary>
+    <tags>scriptcs,http,request,response,cross platform</tags>
     <dependencies>
       <dependency id="RestSharp" version="105.0.1" />
     </dependencies>
