@@ -32,4 +32,7 @@ Console.WriteLine(resp4.StatusCode);
 
 var resp5 = req.Post("http://localhost:5678/", new Person{ FirstName = "New", LastName = "Person" });
 Console.WriteLine(resp5.StatusCode);
+
+var resp = req.Get("http://localhost:5678/", new Dictionary<string, string>{ { "Accept", "application/json" } });
+Console.WriteLine(resp.ContentType);
 ```
