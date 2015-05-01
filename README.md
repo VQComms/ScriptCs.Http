@@ -18,32 +18,36 @@ public class Person
 
 var req = new Http();
 req.FollowRedirects = false;
-
-var cookieContainer = new CookieContainer();
-cookieContainer.Add(new Cookie()
+req.DefaultHeaders = new Dictionary<string,string>{{"Accept", "application/json"}};
+req.DefaultCookies = new List<Cookie>(new []{new Cookie()
                 {
                     Domain = "localhost",
                     Value = "rocks",
-                    Name = "mycookie",
                     Path = "/",
-                }
-            );
-
-var resp = req.Get<List<Person>>("http://localhost:5678/", new Dictionary<string, string>{ { "Accept", "application/json" } }, cookieContainer);
-Console.WriteLine(resp.First().FullName);
-
-var resp2 = req.Delete("http://localhost:5678/1");
-Console.WriteLine(resp2.StatusCode);
-
-var resp3 = req.Get<Person>("http://localhost:5678/3", new Dictionary<string, string>{ { "Accept", "application/xml" } });
-Console.WriteLine(resp3.FullName);
-
-var resp4 = req.Put("http://localhost:5678/1", new Person{ FirstName = "Changed", LastName = "Person" });
-Console.WriteLine(resp4.StatusCode);
-
-var resp5 = req.Post("http://localhost:5678/", new Person{ FirstName = "New", LastName = "Person" });
-Console.WriteLine(resp5.StatusCode);
+                    Name = "mycookie"
+                }});
 
 var resp = req.Get("http://localhost:5678/");
 Console.WriteLine(resp.ContentType);
+
+var resp2 = req.Get<List<Person>>("http://localhost:5678/",  new Dictionary<string, string>{ { "Accept", "application/xml" } }, new List<Cookie>(new []{new Cookie()
+                {
+                    Domain = "localhost",
+                    Value = "rocksbetterthantheprevious",
+                    Path = "/",
+                    Name = "mycookie"
+                }}));
+Console.WriteLine(resp2.First().FullName);
+
+var resp3 = req.Delete("http://localhost:5678/1");
+Console.WriteLine(resp3.StatusCode);
+
+var resp4 = req.Get<Person>("http://localhost:5678/3", new Dictionary<string, string>{ { "Accept", "application/xml" } });
+Console.WriteLine(resp4.FullName);
+
+var resp5 = req.Put("http://localhost:5678/1", new Person{ FirstName = "Changed", LastName = "Person" });
+Console.WriteLine(resp5.StatusCode);
+
+var resp6 = req.Post("http://localhost:5678/", new Person{ FirstName = "New", LastName = "Person" });
+Console.WriteLine(resp6.StatusCode);
 ```
