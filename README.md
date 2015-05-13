@@ -4,7 +4,7 @@ This is a cross platform ScriptCs library that allows you to make Http requests 
 
 ## Usage
 
-`scriptcs -install ScriptCs.Http` 
+`scriptcs -install ScriptCs.Http`
 
 ```
 public class Person
@@ -17,6 +17,8 @@ public class Person
 }
 
 var req = new Http();
+
+req.Authenticator = new HttpBasicAuthenticator("username","password"); //takes any restsharp IAuthenticator
 req.FollowRedirects = false;
 req.DefaultHeaders = new Dictionary<string,string>{{"Accept", "application/json"}};
 req.DefaultCookies = new List<Cookie>(new []{new Cookie()

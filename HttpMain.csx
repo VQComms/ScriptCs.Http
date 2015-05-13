@@ -5,6 +5,7 @@ using System.Net;
 public bool FollowRedirects {get; set;}
 public IDictionary<string, string> DefaultHeaders {get; set;}
 public IList<Cookie> DefaultCookies {get; set;}
+public IAuthenticator Authenticator { get; set; }
 
 public IRestResponse Get(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null)
 {
@@ -58,28 +59,28 @@ private Tuple<RestClient,RestRequest> CreateRequest(string url, Method method, I
 
     var client = new RestClient(host);
     var cookieContainer = new CookieContainer();
-    
+
     if (this.DefaultCookies != null)
     {
         foreach (var cookie in this.DefaultCookies)
         {
             cookieContainer.Add(cookie);
         }
-    }    
-    
+    }
+
     if (cookies != null)
     {
         foreach (var cookie in cookies)
         {
             cookieContainer.Add(cookie);
         }
-    }    
-    
+    }
+
     client.CookieContainer = cookieContainer;
     client.FollowRedirects = this.FollowRedirects;
-    
+
     var request = new RestRequest(resource, method);
-    
+
     if (this.DefaultHeaders != null)
     {
         foreach (var item in this.DefaultHeaders)
@@ -87,8 +88,12 @@ private Tuple<RestClient,RestRequest> CreateRequest(string url, Method method, I
             request.AddHeader(item.Key, item.Value);
         }
     }
-    
-    
+
+    if (this.Authenticator != null)
+    {
+        client.Authenticator = Authenticator;
+    }
+
     if (headers != null)
     {
         foreach (var item in headers)
