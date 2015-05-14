@@ -32,7 +32,7 @@ public IRestResponse Put<T>(string url, T data, IDictionary<string, string> head
 {
     var result = CreateRequest(url, Method.PUT, headers, cookies);
 
-    result.Item2.AddBody(data);
+    result.Item2.AddJsonBody(data);
 
     var response = result.Item1.Execute(result.Item2);
 
@@ -43,7 +43,7 @@ public IRestResponse Post<T>(string url, T data, IDictionary<string, string> hea
 {
     var result = CreateRequest(url, Method.POST, headers, cookies);
 
-    result.Item2.AddBody(data);
+    result.Item2.AddJsonBody(data);
 
     var response = result.Item1.Execute(result.Item2);
 
