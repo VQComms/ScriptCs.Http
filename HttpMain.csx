@@ -2,33 +2,33 @@ using RestSharp;
 using System.Collections.Generic;
 using System.Net;
 
-public bool FollowRedirects {get; set;}
-public IDictionary<string, string> DefaultHeaders {get; set;}
-public IList<Cookie> DefaultCookies {get; set;}
+public bool FollowRedirects { get; set; }
+public IDictionary<string, string> DefaultHeaders { get; set; }
+public IList<Cookie> DefaultCookies { get; set; }
 public IAuthenticator Authenticator { get; set; }
 
-public IRestResponse Get(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null)
+public IRestResponse Get(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
     var result = CreateRequest(url, Method.GET, headers, cookies);
     var response = result.Item1.Execute(result.Item2);
     return response;
 }
 
-public T Get<T>(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null) where T: new()
+public T Get<T>(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null) where T : new()
 {
     var result = CreateRequest(url, Method.GET, headers, cookies);
     var response = result.Item1.Execute<T>(result.Item2);
     return response.Data;
 }
 
-public IRestResponse Delete(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null)
+public IRestResponse Delete(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
     var result = CreateRequest(url, Method.DELETE, headers, cookies);
     var response = result.Item1.Execute(result.Item2);
     return response;
 }
 
-public IRestResponse Put<T>(string url, T data, IDictionary<string, string> headers = null, IList<Cookie> cookies = null)
+public IRestResponse Put<T>(string url, T data, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
     var result = CreateRequest(url, Method.PUT, headers, cookies);
 
@@ -39,7 +39,7 @@ public IRestResponse Put<T>(string url, T data, IDictionary<string, string> head
     return response;
 }
 
-public IRestResponse Post<T>(string url, T data, IDictionary<string, string> headers = null, IList<Cookie> cookies = null)
+public IRestResponse Post<T>(string url, T data, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
     var result = CreateRequest(url, Method.POST, headers, cookies);
 
@@ -50,8 +50,7 @@ public IRestResponse Post<T>(string url, T data, IDictionary<string, string> hea
     return response;
 }
 
-
-private Tuple<RestClient,RestRequest> CreateRequest(string url, Method method, IDictionary<string, string> headers = null, IList<Cookie> cookies = null)
+private Tuple<RestClient, RestRequest> CreateRequest(string url, Method method, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
     var uri = new Uri(url);
     var host = uri.GetLeftPart(UriPartial.Authority);
@@ -80,6 +79,14 @@ private Tuple<RestClient,RestRequest> CreateRequest(string url, Method method, I
     client.FollowRedirects = this.FollowRedirects;
 
     var request = new RestRequest(resource, method);
+
+    if (parameters != null)
+    {
+        foreach (Parameter p in parameters)
+        {
+            request.AddParameter(p);
+        }
+    }
 
     if (this.DefaultHeaders != null)
     {
