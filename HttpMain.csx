@@ -9,28 +9,28 @@ public IAuthenticator Authenticator { get; set; }
 
 public IRestResponse Get(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
-    var result = CreateRequest(url, Method.GET, headers, cookies);
+    var result = CreateRequest(url, Method.GET, headers, cookies, parameters);
     var response = result.Item1.Execute(result.Item2);
     return response;
 }
 
 public T Get<T>(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null) where T : new()
 {
-    var result = CreateRequest(url, Method.GET, headers, cookies);
+    var result = CreateRequest(url, Method.GET, headers, cookies, parameters);
     var response = result.Item1.Execute<T>(result.Item2);
     return response.Data;
 }
 
 public IRestResponse Delete(string url, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
-    var result = CreateRequest(url, Method.DELETE, headers, cookies);
+    var result = CreateRequest(url, Method.DELETE, headers, cookies, parameters);
     var response = result.Item1.Execute(result.Item2);
     return response;
 }
 
 public IRestResponse Put<T>(string url, T data, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
-    var result = CreateRequest(url, Method.PUT, headers, cookies);
+    var result = CreateRequest(url, Method.PUT, headers, cookies, parameters);
 
     result.Item2.AddJsonBody(data);
 
@@ -41,7 +41,7 @@ public IRestResponse Put<T>(string url, T data, IDictionary<string, string> head
 
 public IRestResponse Post<T>(string url, T data, IDictionary<string, string> headers = null, IList<Cookie> cookies = null, IEnumerable<Parameter> parameters = null)
 {
-    var result = CreateRequest(url, Method.POST, headers, cookies);
+    var result = CreateRequest(url, Method.POST, headers, cookies, parameters);
 
     result.Item2.AddJsonBody(data);
 
